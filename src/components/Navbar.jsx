@@ -10,7 +10,7 @@ const navList = [
   { id: 4, title: "Educations", url: "/educations" },
   { id: 5, title: "Certifications", url: "/certifications" },
   { id: 6, title: "Projects", url: "/projects" },
-  { id: 7, title: "Experience", url: "/experience" },
+  // { id: 7, title: "Experience", url: "/experience" },
   { id: 8, title: "Contact", url: "/contact" },
 ];
 

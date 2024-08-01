@@ -60,7 +60,7 @@ const Skill = () => {
     };
 
     // Example SVG paths for demonstration
-    loadSvgIcon('/path-to-your-svg-file.svg', 200, 200); // Replace with actual path to your SVG file
+    // loadSvgIcon('/path-to-your-svg-file.svg', 200, 200); // Replace with actual path to your SVG file
 
     // Add static edges
     Composite.add(world, [
@@ -102,12 +102,12 @@ const Skill = () => {
 
   return (
     <div id="canvas-container" className="w-full h-screen bg-custom-blue">
-      <div className="absolute top-5 left-5 text-white">
+      {/* <div className="absolute top-5 left-5 text-white">
         <FaHtml5 size={40} className="mx-2" />
         <FaCss3Alt size={40} className="mx-2" />
         <FaJs size={40} className="mx-2" />
         <FaReact size={40} className="mx-2" />
-      </div>
+      </div> */}
     </div>
   );
 };
