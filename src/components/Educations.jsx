@@ -44,14 +44,14 @@ const Education = () => {
       </div>
       <div className="box-container flex flex-col items-center space-y-8 mx-4 md:mx-8">
         {educationData.map(({ id, title, institution, period, image }) => (
-          <div key={id} className="box flex flex-col md:flex-row w-full md:w-4/5 bg-blue-100 rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
+          <div key={id} className="box flex flex-col md:flex-row w-full md:w-4/5 bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
             <div className="image flex-shrink-0 md:w-1/3">
               <img className="w-full h-48 md:h-40 object-cover" src={image} alt={title} />
             </div>
             <div className="content p-4 flex flex-col justify-center md:w-2/3">
-              <h3 className="text-lg md:text-xl font-semibold text-[#012970] mb-2">{title}</h3>
+              <h3 className="text-lg md:text-xl font-semibold text-custom-blue mb-2">{title}</h3>
               <p className="text-sm md:text-md mb-2">{institution}</p>
-              <h4 className="text-sm md:text-lg font-medium text-green-700">{period}</h4>
+              <h4 className="text-sm md:text-lg font-medium text-custom-blue">{period}</h4>
             </div>
           </div>
         ))}
