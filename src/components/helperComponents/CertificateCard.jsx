@@ -1,32 +1,31 @@
 import React from 'react';
+import '../css/Certificate.scss';
 
 const CertificateCard = ({ title, description, link, icon }) => {
   return (
     <div>
-      <div
-        className="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10"
-      >
-        <span className="absolute top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[10]" />
-        <div className="relative z-10 mx-auto max-w-md">
-          <span className="grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400">
-            {icon}
-          </span>
-          <div className="space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90">
-            <p>{description}</p>
-          </div>
-          <div className="pt-5 text-base font-semibold leading-7">
-            <p>
-              <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sky-500 transition-all duration-300 group-hover:text-white"
-              >
-                Read the docs &rarr;
-              </a>
-            </p>
-          </div>
+      <div className="box">
+        <div className="box-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path>
+          </svg>
         </div>
+        <div className="box-label">{description}</div>
+        <div className="box-title">{title} 🍀</div>
+        <div className="box-image">
+          <img src="https://source.unsplash.com/600x600" alt="" />
+        </div>
+        <button className="view-button" onClick={() => window.open(link)}
+        >
+          <div className="view-button-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+            </svg>
+          </div>
+          <div className="view-button-label">
+            View
+          </div>
+        </button>
       </div>
     </div>
   );

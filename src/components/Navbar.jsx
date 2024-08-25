@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./css/Navbar.css";
+import Titles from "./config/Title";
 
 const navList = [
   { id: 1, title: "Home", url: "/" },
@@ -17,7 +18,10 @@ const navList = [
 const Navbar = () => {
   // const [show, handleShow] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  
+  const title = Titles[Math.floor(Math.random() * Titles.length)];
+    
+  
   // useEffect(() => {
   //   const handleScroll = () => {
   //     if (window.scrollY > 100) {
@@ -45,7 +49,7 @@ const Navbar = () => {
       >
         <div className="navbar__container flex items-center justify-between">
           <div className="navbar__logo text-white">
-            <h2>Si4k</h2>
+            <h2>{title}</h2>
           </div>
           
           <div className={`navbar__menu ${menuOpen ? "hidden" : "block"} md:flex`}>

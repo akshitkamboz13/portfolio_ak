@@ -10,7 +10,7 @@ export default {
         sans: ['Poppins', 'sans-serif'],
       },
       colors: {
-        'custom-blue': '#0d47a1',
+        'custom-blue': '#0c0f13',
       },
     },
   },

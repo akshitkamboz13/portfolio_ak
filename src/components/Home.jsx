@@ -1,15 +1,29 @@
-// src/components/Home.jsx
-import ParticleBackground from "./ParticleBackground";
+import React, { Suspense, lazy } from "react";
+
+const Certifications = lazy(() => import("./Certifications"));
+const About = lazy(() => import("./About"));
+const Education = lazy(() => import("./Educations"));
+const FrontMain = lazy(() => import("./FrontMain"));
+const Contact = lazy(() => import("./Contact"));
+const Skills = lazy(() => import("./Skills"));
+const Map = lazy(() => import("./helperComponents/Map"));
 
 const Home = () => {
   return (
     <>
-      <div className="relative w-full h-screen">
-        <ParticleBackground />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center">
-          <h1 className="text-4xl md:text-6xl font-bold">Hello, I'm Si4k</h1>
-          <p className="text-xl md:text-2xl">I'm a Full Stack Developer</p>
-        </div>
+      <div className="relative w-full h-screen bg-custom-blue">
+        <Suspense fallback={<div className="flex justify-center items-center h-screen">Loading...</div>}>
+          <FrontMain />
+        </Suspense>
+      </div>
+      <div className="relative w-full h-[100%] bg-custom-blue">
+        <Suspense fallback={<div className="flex justify-center items-center h-screen">Loading...</div>}>
+          <About />
+          <Skills />
+          <Education />
+          <Certifications count={3} />
+          <Contact />
+        </Suspense>
       </div>
     </>
   );

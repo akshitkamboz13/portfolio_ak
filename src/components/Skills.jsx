@@ -1,115 +1,288 @@
-import React, { useEffect } from 'react';
-import { FaHtml5, FaCss3Alt, FaJs, FaReact } from 'react-icons/fa';
-import * as Matter from 'matter-js';
+import { useEffect } from "react";
+import { Engine, Render, Runner, Bodies, Composite, MouseConstraint, Mouse, Events, Body } from "matter-js";
+import "./css/Skills.css";
 
-const Skill = () => {
+const Skills = () => {
   useEffect(() => {
-    const { Engine, Render, Runner, Common, MouseConstraint, Mouse, Composite, Bodies, Svg, Vertices } = Matter;
-
-    // Create engine and world
+    // Create engine
     const engine = Engine.create();
-    const world = engine.world;
+    const matterBox = document.querySelector(".matter-box");
 
     // Create renderer
     const render = Render.create({
-      element: document.getElementById('canvas-container'),
-      engine: engine,
+      element: matterBox,
+      engine,
       options: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        background: 'transparent',
-      }
+        width: matterBox.clientWidth,
+        height: matterBox.clientHeight,
+        wireframes: false,
+        background: "transparent",
+      },
     });
 
-    Render.run(render);
+    // Ensure the canvas is properly resized and positioned
+    function updateRenderSize() {
+      render.canvas.width = matterBox.clientWidth;
+      render.canvas.height = matterBox.clientHeight;
+      render.options.width = matterBox.clientWidth;
+      render.options.height = matterBox.clientHeight;
+    }
+
+    // Select pills
+    const matterPill = document.querySelectorAll(".dm-matter-elem-pill");
+    engine.world.gravity.y = 0.2;
+
+    // Function to create pill shapes
+    function createPills() {
+      const centerX = matterBox.clientWidth / 2;
+      const centerY = matterBox.clientHeight / 2;
+
+      return Array.from(matterPill).map((matterPillElem) => {
+        const pillWidth = matterPillElem.offsetWidth;
+        const pillHeight = matterPillElem.offsetHeight;
+        const pillRadius = pillHeight / 2;
+
+        const leftCircle = Bodies.circle(
+          centerX - pillWidth / 2 + pillRadius,
+          centerY,
+          pillRadius,
+          {
+            density: 0.01,
+            friction: 0.1,
+            frictionAir: 0.05,
+            restitution: 0.5,
+            render: { opacity: 0 },
+          }
+        );
+
+        const rightCircle = Bodies.circle(
+          centerX + pillWidth / 2 - pillRadius,
+          centerY,
+          pillRadius,
+          {
+            density: 0.01,
+            friction: 0.1,
+            frictionAir: 0.05,
+            restitution: 0.5,
+            render: { opacity: 0 },
+          }
+        );
+
+        const rect = Bodies.rectangle(
+          centerX,
+          centerY,
+          pillWidth - pillHeight,
+          pillHeight,
+          {
+            density: 0.01,
+            friction: 0.1,
+            frictionAir: 0.05,
+            restitution: 0.5,
+            render: { opacity: 0 },
+          }
+        );
+
+        const pillBody = Body.create({
+          parts: [leftCircle, rightCircle, rect],
+          friction: 0.1,
+          restitution: 0.5,
+          frictionAir: 0.05,
+        });
+
+        Composite.add(engine.world, pillBody);
+        return pillBody;
+      });
+    }
+
+    let elemPills = createPills();
+
+    // Create boundaries
+    function createBoundaries() {
+      const ground = Bodies.rectangle(
+        matterBox.clientWidth / 2,
+        matterBox.clientHeight + 50,
+        matterBox.clientWidth,
+        100,
+        {
+          isStatic: true,
+          render: { opacity: 0 },
+        }
+      );
+
+      const leftWall = Bodies.rectangle(
+        -50,
+        matterBox.clientHeight / 2,
+        100,
+        matterBox.clientHeight,
+        {
+          isStatic: true,
+          render: { opacity: 0 },
+        }
+      );
+
+      const rightWall = Bodies.rectangle(
+        matterBox.clientWidth + 50,
+        matterBox.clientHeight / 2,
+        100,
+        matterBox.clientHeight,
+        {
+          isStatic: true,
+          render: { opacity: 0 },
+        }
+      );
+
+      const topWall = Bodies.rectangle(
+        matterBox.clientWidth / 2,
+        -50,
+        matterBox.clientWidth,
+        100,
+        {
+          isStatic: true,
+          render: { opacity: 0 },
+        }
+      );
+
+      Composite.add(engine.world, [ground, leftWall, rightWall, topWall]);
+    }
+
+    createBoundaries();
 
     // Create runner
     const runner = Runner.create();
     Runner.run(runner, engine);
+    Render.run(render);
 
-    // Function to add SVG shapes
-    const addSvgShapes = (vertices, x, y) => {
-      const color = Common.choose(['#f19648', '#f5d259', '#f55a3c', '#063e7b', '#ececd1']);
-      const body = Bodies.fromVertices(x, y, vertices, {
-        render: {
-          fillStyle: color,
-          strokeStyle: color,
-          lineWidth: 1
-        }
-      });
-
-      Composite.add(world, body);
-    };
-
-    // Load SVGs and add them to the canvas
-    const loadSvgIcon = async (url, x, y) => {
-      try {
-        const response = await fetch(url);
-        const text = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(text, 'image/svg+xml');
-        const paths = doc.querySelectorAll('path');
-
-        paths.forEach((path, i) => {
-          const vertices = Vertices.scale(Svg.pathToVertices(path, 30), 0.4, 0.4);
-          addSvgShapes(vertices, x + i * 150, y);
-        });
-      } catch (error) {
-        console.error('Error loading SVG:', error);
-      }
-    };
-
-    // Example SVG paths for demonstration
-    // loadSvgIcon('/path-to-your-svg-file.svg', 200, 200); // Replace with actual path to your SVG file
-
-    // Add static edges
-    Composite.add(world, [
-      Bodies.rectangle(window.innerWidth / 2, 0, window.innerWidth, 50, { isStatic: true }),
-      Bodies.rectangle(window.innerWidth / 2, window.innerHeight, window.innerWidth, 50, { isStatic: true }),
-      Bodies.rectangle(window.innerWidth, window.innerHeight / 2, 50, window.innerHeight, { isStatic: true }),
-      Bodies.rectangle(0, window.innerHeight / 2, 50, window.innerHeight, { isStatic: true })
-    ]);
-
-    // Add mouse control
+    // Mouse control
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
+      mouse,
       constraint: {
         stiffness: 0.2,
-        render: {
-          visible: false
-        }
-      }
+        render: { visible: false },
+      },
     });
 
-    Composite.add(world, mouseConstraint);
-
-    // Keep the mouse in sync with rendering
+    Composite.add(engine.world, mouseConstraint);
     render.mouse = mouse;
 
-    // Fit the render viewport to the scene
-    Render.lookAt(render, {
-      min: { x: 0, y: 0 },
-      max: { x: window.innerWidth, y: window.innerHeight }
+    // Update pill positions
+    Events.on(engine, "afterUpdate", () => {
+      elemPills.forEach((pillBody, index) => {
+        const angle = pillBody.angle;
+        const position = pillBody.position;
+        const matterPillElem = matterPill[index];
+
+        matterPillElem.style.left = `${position.x - matterPillElem.offsetWidth / 2}px`;
+        matterPillElem.style.top = `${position.y - matterPillElem.offsetHeight / 2}px`;
+        matterPillElem.style.transform = `rotate(${angle}rad)`;
+      });
     });
 
-    // Clean up on component unmount
+    // Handle resize event
+    function handleResize() {
+      updateRenderSize();
+      Composite.clear(engine.world, false);
+      createBoundaries();
+      elemPills = createPills();
+      
+      // Update mouse constraint
+      // Remove existing event listeners
+      mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
+      mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
+      mouseConstraint.mouse.element.removeEventListener("touchstart", mouseConstraint.mouse.mousedown);
+      mouseConstraint.mouse.element.removeEventListener("touchmove", mouseConstraint.mouse.mousemove);
+      mouseConstraint.mouse.element.removeEventListener("touchend", mouseConstraint.mouse.mouseup);
+
+      // Add new event listeners
+      mouseConstraint.mouse.element.addEventListener("touchstart", mouseConstraint.mouse.mousedown, { passive: true });
+      mouseConstraint.mouse.element.addEventListener("touchmove", (e) => {
+        if (mouseConstraint.body) {
+          mouseConstraint.mouse.mousemove(e);
+        }
+      });
+      mouseConstraint.mouse.element.addEventListener("touchend", (e) => {
+        if (mouseConstraint.body) {
+          mouseConstraint.mouse.mouseup(e);
+        }
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
     return () => {
-      Render.stop(render);
       Runner.stop(runner);
+      Render.stop(render);
+      Composite.clear(engine.world, false);
+      window.removeEventListener("resize", handleResize);
+
+      // Remove all event listeners
+      mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
+      mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
+      mouseConstraint.mouse.element.removeEventListener("touchstart", mouseConstraint.mouse.mousedown);
+      mouseConstraint.mouse.element.removeEventListener("touchmove", mouseConstraint.mouse.mousemove);
+      mouseConstraint.mouse.element.removeEventListener("touchend", mouseConstraint.mouse.mouseup);
     };
   }, []);
 
   return (
-    <div id="canvas-container" className="w-full h-screen bg-custom-blue">
-      {/* <div className="absolute top-5 left-5 text-white">
-        <FaHtml5 size={40} className="mx-2" />
-        <FaCss3Alt size={40} className="mx-2" />
-        <FaJs size={40} className="mx-2" />
-        <FaReact size={40} className="mx-2" />
-      </div> */}
-    </div>
+    <section className="skills w-full bg-custom-blue py-24 h-screen" id="skills">
+      <div className="text-start ml-20">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-10">Skills</h1>
+      </div>
+      <div className="flex justify-center items-center w-full h-full bg-custom-blue">
+        <div className="matter-box relative w-full h-full bg-custom-blue mb-16">
+          {[
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "Java",
+            "RESTful API",
+            "React.js",
+            "Node.js",
+            "MongoDB",
+            "SQL",
+            "PostgreSQL",
+            "Postman",
+            "Git",
+            "GitHub",
+            "Express.js",
+            "Data Structures & Algorithms",
+            "Tailwind CSS",
+            "Bootstrap",
+            "Spring Boot",
+            "C++",
+            "MS Office",
+            "VS Code",
+            "Eclipse",
+            "IntelliJ IDEA",
+            "Canvas",
+            "Matter.js",
+            "Vite",
+            "TypeScript",
+            "Poppins Font",
+            "Web Development",
+            "Particle.js",
+            "Thunder Client",
+            "Linux",
+            "CMD",
+            "Terminal",
+            "Windows",
+            "Blockchain",
+            "Cloud Computing",
+            "APIs",
+            "REST",
+            "JSON",
+            "AJAX",
+          ].map((skill) => (
+            <div key={skill} className="dm-matter-elem-pill text-custom-blue">
+              {skill}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
-export default Skill;
+export default Skills;

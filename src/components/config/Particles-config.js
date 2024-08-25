@@ -2,7 +2,7 @@
 const particlesConfig = {
   background: {
     color: {
-      value: "#0d47a1",
+      value: "#0c0f13",
     },
   },
   fpsLimit: 120,

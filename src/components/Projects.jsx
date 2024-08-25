@@ -1,5 +1,4 @@
 import React from 'react'
-import ParticleBackground from "./ParticleBackground";
 
 const Projects = () => {
   return (

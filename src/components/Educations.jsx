@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaGraduationCap } from 'react-icons/fa';
 import rbuIMG from '../assets/images/rbu.jpeg';
 import GSSSIMG from '../assets/images/GSSS.jpg';
 import NISDIMG from '../assets/images/NISD.png';
@@ -39,15 +38,16 @@ const educationData = [
 const Education = () => {
   return (
     <section className="education w-full bg-custom-blue py-20" id="education">
-      <div className="text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-8">Education</h1>
+      <div className="text-start ml-20">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-10">Educations</h1>
+        
       </div>
       <div className="box-container flex flex-col items-center space-y-8 mx-4 md:mx-8">
         {educationData.map(({ id, title, institution, period, image }) => (
           <div key={id} className="box flex flex-col md:flex-row w-full md:w-4/5 bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105">
-            <div className="image flex-shrink-0 md:w-1/3">
-              <img className="w-full h-48 md:h-40 object-cover" src={image} alt={title} />
-            </div>
+            <figure className="image flex-shrink-0 md:w-1/3"loading="lazy">
+              <img className="w-full h-48 md:h-40 object-cover" loading="lazy" src={image} alt={title} />
+            </figure>
             <div className="content p-4 flex flex-col justify-center md:w-2/3">
               <h3 className="text-lg md:text-xl font-semibold text-custom-blue mb-2">{title}</h3>
               <p className="text-sm md:text-md mb-2">{institution}</p>

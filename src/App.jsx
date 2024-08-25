@@ -15,7 +15,6 @@ import ParticleBackground from './components/ParticleBackground';
 const App = () => {
   return (
     <Router className="font-sans">
-      <ParticleBackground />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
