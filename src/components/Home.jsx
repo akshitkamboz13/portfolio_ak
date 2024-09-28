@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 
 const Certifications = lazy(() => import("./Certifications"));
 const About = lazy(() => import("./About"));
@@ -9,8 +9,11 @@ const Skills = lazy(() => import("./Skills"));
 const Map = lazy(() => import("./helperComponents/Map"));
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "Home | Akshit Kamboj";
+  });
   return (
-    <>
+    <> 
       <div className="relative w-full h-screen bg-custom-blue">
         <Suspense fallback={<div className="flex justify-center items-center h-screen">Loading...</div>}>
           <FrontMain />

@@ -1,9 +1,21 @@
-import { useEffect } from "react";
-import { Engine, Render, Runner, Bodies, Composite, MouseConstraint, Mouse, Events, Body } from "matter-js";
+import React, { useEffect } from "react";
+import Matter from "matter-js";
 import "./css/Skills.css";
 
 const Skills = () => {
   useEffect(() => {
+    const {
+      Engine,
+      Render,
+      Runner,
+      Bodies,
+      Composite,
+      MouseConstraint,
+      Mouse,
+      Events,
+      Body,
+    } = Matter;
+
     // Create engine
     const engine = Engine.create();
     const matterBox = document.querySelector(".matter-box");
@@ -11,7 +23,7 @@ const Skills = () => {
     // Create renderer
     const render = Render.create({
       element: matterBox,
-      engine,
+      engine: engine,
       options: {
         width: matterBox.clientWidth,
         height: matterBox.clientHeight,
@@ -155,7 +167,7 @@ const Skills = () => {
     // Mouse control
     const mouse = Mouse.create(render.canvas);
     const mouseConstraint = MouseConstraint.create(engine, {
-      mouse,
+      mouse: mouse,
       constraint: {
         stiffness: 0.2,
         render: { visible: false },
@@ -226,12 +238,12 @@ const Skills = () => {
   }, []);
 
   return (
-    <section className="skills w-full bg-custom-blue py-24 h-screen" id="skills">
+    <section className="skills w-[100%] bg-custom-blue py-24 h-screen" id="skills">
       <div className="text-start ml-20">
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-10">Skills</h1>
       </div>
-      <div className="flex justify-center items-center w-full h-full bg-custom-blue">
-        <div className="matter-box relative w-full h-full bg-custom-blue mb-16">
+      <div className="flex justify-center items-center w-[100%] h-full bg-custom-blue">
+        <div className="matter-box relative w-[100%] h-full bg-custom-blue mb-16">
           {[
             "HTML",
             "CSS",

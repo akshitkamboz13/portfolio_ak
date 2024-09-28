@@ -1,9 +1,14 @@
 .box {
-    background: white;
+    background: #0c0f13;
     border-radius: 20px;
     display: grid;
     grid-template-columns: 64px 1fr;
     position: relative;
+    height: 16em;
+    border: 1px solid #ffffff;
+    box-shadow: 0 4px 14px rgba(221, 221, 221, 0.25);
+    transition: 0.35s ease all;
+    color: #ffffff;;
   }
   
   .box-icon {
@@ -16,8 +21,8 @@
     display: flex;
     align-items: center;
     padding-left: 16px;
-    font-size: 14px;
-    letter-spacing: 0.125em;
+    font-size: 24px;
+    font-weight: 700;
   }
   
   .box-title {
@@ -26,20 +31,26 @@
     align-items: center;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    font-size: 24px;
+    font-size: 14px;
+    letter-spacing: 0.500em;
     padding-top: 16px;
   }
   
   .box-image {
     width: 300px;
     height: 300px;
-    border-radius: 18px 0 18px 0;
-    overflow: hidden;
+
+    display: flex;
+    padding-left: 16px;
+    font-size: 14px;
+    letter-spacing: 0.125em;
+    // border-radius: 18px 0 18px 0;
+    // overflow: hidden;
   
-    img {
-      width: 100%;
-      display: block;
-    }
+    // img {
+    //   width: 100%;
+    //   display: block;
+    // }
   }
   
   .view-button {
@@ -48,8 +59,8 @@
     right: 16px;
     display: flex;
     align-items: center;
-    background: rgb(0, 0, 0);
-    color: rgb(187 247 208);
+    background: rgb(255, 255, 255);
+    color: #0c0f13;
     padding: 6px 8px;
     border-radius: 50px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);

@@ -47,8 +47,8 @@ const Navbar = () => {
       //className={`navbar ${show ? "bg-gray-900 shadow-lg" : "bg-transparent"}  fixed top-0 w-full z-50 transition-colors duration-300 py-10 px-5 ${
         className={`navbar bg-transparent fixed top-0 w-full z-50 transition-colors duration-300 py-10 px-5`}
       >
-        <div className="navbar__container flex items-center justify-between">
-          <div className="navbar__logo text-white">
+        <div className="navbar__container flex items-center justify-between ">
+          <div className="navbar__logo text-white custom-cursor-pointer">
             <h2>{title}</h2>
           </div>
           
@@ -58,7 +58,7 @@ const Navbar = () => {
                 <li key={nav.id}>
                   <Link
                     to={nav.url}
-                    className="text-white hover:text-gray-300 hover:border-b-2 border-transparent"
+                    className="text-white hover:text-gray-300 hover:border-b-2 border-transparent custom-cursor-pointer"
                   >
                     {nav.title}
                   </Link>
